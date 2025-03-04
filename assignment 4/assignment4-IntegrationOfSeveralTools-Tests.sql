@@ -1,0 +1,61 @@
+--TESTS FOR ASSIGNMENT 4  - COMBINATION OF TOOLS
+
+-- RESETTING DATA FOR TEST
+DELETE FROM ARCHIVE_LIKES WHERE ARCHIVE_LIKES.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+DELETE FROM ARCHIVE_LIKES WHERE ARCHIVE_LIKES.Username = 'AviaIsTheBest'
+DELETE FROM ARCHIVE_HASHTAGS WHERE ARCHIVE_HASHTAGS.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+DELETE FROM ARCHIVE_SHARES WHERE ARCHIVE_SHARES.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+DELETE FROM ARCHIVE_MEMES WHERE Username = 'AviaIsTheBest' 
+DELETE FROM ARCHIVE_CUSTOMERS WHERE Username = 'AviaIsTheBest'
+
+
+-- Adding new customer
+INSERT INTO CUSTOMERS (Username, Password, PlanName, Email, FirstName, LastName, BirthDate, JoinDate, CreditCardNumber, LastMemeCreatedAt, TotalMemes) 
+		Values ('AviaIsTheBest', 8843838, 'Free', 'aviacoheen@gmail.com', 'Avia', 'Cohen', '3/24/1995', '1/1/2022', '1234123412341234',NULL, NULL)
+
+--SHOW  NEW CUSTOMER
+SELECT * FROM CUSTOMERS WHERE Username = 'AviaIsTheBest'
+							
+-- Adding new memes 
+INSERT INTO MEMES(Meme, Username, TemplateID, CreationDT, FileSize, TotalCustomizationsTextBox, TotalCustomizationsImage)
+VALUES (4143, 'AviaIsTheBest', 82, '1/3/2022 10:34:09 AM', 450, 1, 2),(4144, 'AviaIsTheBest', 81, '1/2/2022 12:29:10 PM', 450, 1, 2),
+(4146, 'AviaIsTheBest', 97, '2/4/22 11:35:15 AM', 300, 2, 3), (4145, 'AviaIsTheBest', 97, '1/4/22 17:27:32 PM', 300, 2, 3)
+
+--SHOW MEMES FOR AVIAISTHEBEST
+SELECT * FROM MEMES WHERE Username = 'AviaIsTheBest'
+
+-- sharing meme to Site Social Network
+INSERT INTO SHARES(ShareDT,Meme,Destination)
+VALUES ('2/4/22 11:32:15 AM', 4143,'Site Social Network'),('2/4/22 11:37:15 AM', 4144,'Site Social Network')
+
+--SHOW SHARES
+SELECT * FROM SHARES WHERE SHARES.Meme IN ( SELECT Meme FROM MEMES WHERE MEMES.Username = 'AviaIsTheBest')
+
+-- adding hashtags to meme
+INSERT INTO HASHTAGS (Meme, TagName)
+VALUES (4143, 'realestate'), (4143, 'splurge')
+
+-- SHOW HASHTAGS
+SELECT * FROM HASHTAGS WHERE HASHTAGS.MEME IN ( SELECT Meme FROM MEMES WHERE MEMES.Username = 'AviaIsTheBest')
+
+-- adding likes to meme
+INSERT INTO LIKES(LikeDT, Username, ShareDT, Meme, LikeType)
+VALUES ('2/4/22 11:40:01 AM', '_Cow_-', '2/4/22 11:32:15 AM', 4143, 'Like'),('2/4/22 11:40:09 AM', '_Cow_-', '2/4/22 11:37:15 AM', 4144, 'Wow'),
+('2/4/22 11:33:01 AM', '_beans_', '2/4/22 11:32:15 AM', 4143, 'Like'),('1/10/23 15:00:00 PM', 'AviaIsTheBest', '9/16/2022 02:14:21 AM', 2, 'Like')
+
+-- SHOW LIKES 
+SELECT * FROM LIKES WHERE LIKES.MEME IN ( SELECT Meme FROM MEMES WHERE MEMES.Username = 'AviaIsTheBest')
+SELECT * FROM LIKES WHERE LIKES.Username = 'AviaIsTheBest'
+
+-- TESTING SP
+EXECUTE SP_DELETE_CUSTOMER 'AviaIsTheBest';
+
+
+-- SHOW ARCHIVES
+SELECT * FROM ARCHIVE_LIKES WHERE ARCHIVE_LIKES.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+SELECT * FROM ARCHIVE_LIKES WHERE ARCHIVE_LIKES.Username = 'AviaIsTheBest'
+SELECT * FROM ARCHIVE_HASHTAGS WHERE ARCHIVE_HASHTAGS.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+SELECT * FROM ARCHIVE_SHARES WHERE ARCHIVE_SHARES.Meme IN ( SELECT Meme FROM ARCHIVE_MEMES WHERE ARCHIVE_MEMES.Username = 'AviaIsTheBest')
+SELECT * FROM ARCHIVE_MEMES WHERE Username = 'AviaIsTheBest' 
+SELECT * FROM ARCHIVE_CUSTOMERS WHERE Username = 'AviaIsTheBest'
+									
