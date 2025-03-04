@@ -4,8 +4,6 @@
 
 This academic project models the database and business processes for **MEMEvertisement** – a fictional organization that
 provides marketing content creation services through innovative meme creation, sticker design and GIF generation.
-It demonstrates various SQL features, including basic queries, nested queries, triggers, stored procedures, and more.
-The accompanying PDF report provides a detailed ERD model, business logic, and explanations for each query.
 
 ## Key Features
 
